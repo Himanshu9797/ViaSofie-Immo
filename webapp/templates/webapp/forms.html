@@ -1,0 +1,18 @@
+{% extends 'webapp/base.html' %}
+{% load staticfiles %}
+
+{% block header %}
+	<link rel="stylesheet" type="text/css" href="{% static 'webapp/css/forms.css' %}" />
+{% endblock header %}
+
+{% block content %}
+<div class="forms">
+	<form method="post" action="">
+		{% csrf_token %}
+		<table>
+			{{form}}
+		</table>
+		<input type="submit" value="Submit Form"/>
+	</form>
+</div>
+{% endblock content %}

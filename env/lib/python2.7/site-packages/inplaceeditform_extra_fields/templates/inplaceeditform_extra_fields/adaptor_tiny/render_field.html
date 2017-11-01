@@ -1,0 +1,6 @@
+{% extends "inplaceeditform/render_field.html" %}
+
+{% block formclass %}tinyForm{% endblock %}
+
+{% block classapply %}{{ block.super }} applyTinyMCE{% endblock %}
+{% block classcancel %}{{ block.super }} cancelTinyMCE{% endblock %}

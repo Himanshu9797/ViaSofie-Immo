@@ -1,0 +1,62 @@
+{% extends 'webapp/base.html' %} {% load inplace_edit %} {% load staticfiles %} {% block header %} {% inplace_toolbar %}
+
+<link rel="stylesheet" href="{% static 'webapp/css/about.css' %}" type="text/css" media="screen" />
+
+<title>Over | Via Sofie</title>
+
+<!--meta data-->
+<meta name="description" content="ViaSofie | Sofie is juriste van opleiding met een Master in de Rechten en behaalde een postgraduaat Vastgoedkunde aan de KU Leuven.">
+<meta name="keywords" content="over, about, immo, immobilien, immobiliën, vastgoed, advies, vastgoedmakelaar, sofie, andriesen, via sofie, viasofie, mussenhoevenlaan, 2530, boechout, lint, kontich, antwerpen, te koop, te huur, wonen, huren, kopen, makelaar, huis, biv">
+<meta name="author" content="Sacha Van den Wyngaert">
+
+{% endblock header %}
+
+{% block content %}
+<div class="cards">
+	<a href="/contact"><div class="contact">Neem contact op</div></a>
+	<!--   Creative Tim Branding   -->
+	<div class="logo-container">
+		<div class="logo">
+			<img src="{% static 'webapp/images/logo-BIV-IPI.jpg' %}">
+		</div>
+		<div class="logo">
+			<img src="{% static 'webapp/images/kul.png' %}">
+		</div>
+		<div class="logo">
+			<img src="{% static 'webapp/images/ua.jpg' %}">
+		</div>
+	</div>
+	 <div class="card active" id="overview">
+		<a class="card-toggle"><i class="fa fa-arrow-circle-left"></i></a>
+		<div class="card-content">
+			<div class="row">
+				<div class="left col">
+					<h2>Sofie Andriesen <strong>Vastgoedmakelaar</strong></h2>
+					
+					<p>Ik ben juriste van opleiding (Master in de Rechten) en behaalde tevens een postgraduaat Vastgoedkunde aan de KU Leuven. Als erkend vastgoedmakelaar loods ik je graag doorheen het vastgoedlandschap en dit met het oog op een succesvolle verkoop of verhuur. Ook voor de opmaak van een taxatieverslag of adviesverlening kan je bij mij terecht. Ik maak een waardebepaling op aan de hand van concrete gegevens, dat maakt je sterker in de onderhandelingen.Ik neem graag de zorg van de  verkoop of verhuur van jouw pand uit handen. Zo moet je geen bezichtigingen regelen en er niet van wakker liggen hoe je  een verkoop- of verhuurdossier moet samenstellen conform de wettelijke bepalingen. Heb je vragen of wil je weten wat ik voor jou kan betekenen, bel me gerust dan kan je alsnog bepalen of we samen in zee gaan! En mocht je overtuigd zijn van de service die ik je kan bieden, weet dan ook dat ik bij iedere succesvolle verkoop een stukje van de commissie aan een goed doel wegschenk.</p>
+					
+				</div>
+				<div class="right col">
+				</div>
+			</div>
+		</div>
+	</div> 
+	
+
+	<div class="card" id="dribbble">
+		<a class="card-toggle" href="##"><i><span class="fa fa-facebook"></span></i></a>
+	</div> 
+	<div class="card" id="twiter">
+		<a class="card-toggle" href="https://twitter.com/AndriesenSofie" target="_blank"><i><span class="fa fa-twitter"></span></i></a>
+	</div>
+	<div class="card" id="linkedin">
+		<a class="card-toggle" href="https://www.linkedin.com/in/sofieandriesen/" target="_blank"><i><span class="fa fa-linkedin"></span></i></a>
+	</div>
+	<div class="card" id="behance">
+		<a class="card-toggle" href="https://nl.pinterest.com/andriesen/" target="_blank"><i><span class="fa fa-pinterest"></span></i></a>
+	</div>
+	
+	
+</div>
+
+{% endblock content %}

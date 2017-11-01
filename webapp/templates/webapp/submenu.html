@@ -1,0 +1,255 @@
+{% load staticfiles %} {% load module_sander %}
+<link rel="stylesheet" href="{% static 'webapp/css/submenu.css' %}" type="text/css" media="screen" />
+<div class="container" id="header-container">
+    <div class="bottom-header">
+        <div class="header-bottom">
+            <div class=" bottom-head">
+                <a href="/panden/handelstatus=1">
+                    <div class="buy-media">
+                        <!--<i class="buy"> </i>-->
+                        <h6>{{ data.13.titel }}</h6>
+                    </div>
+                </a>
+            </div>
+            <div class=" bottom-head">
+                <a href="/panden/handelstatus=2">
+                    <div class="buy-media">
+                        <!--<i class="rent"> </i>-->
+                        <h6>{{ data.14.titel }}</h6>
+                    </div>
+                </a>
+            </div>
+            <div id="searchButton" class="bottom-head middle">
+                <img class="img-responsive" src="{% static 'webapp/images/magnifier.svg' %}">
+            </div>
+            <div class="bottom-head bottom-head-right">
+                <a href="/advies">
+                    <div class="buy-media">
+                        <!--<i class="sell"> </i>-->
+                        <h6>{{ data.7.titel }}</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="bottom-head bottom-head-right">
+                <a href="/referenties">
+                    <div class="buy-media">
+                        <!--<i class="deal"> </i>-->
+                        <h6>{{ data.8.titel }}</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        <form id="advancedSearchForm" method="post">
+            <section class="mega-search open" id="mega-search" onclick="change()">
+                <div class="searchDiv">
+                    <div id="mega-productsearch" class="search-form products active">
+                        <fieldset>
+                            <label for="mega-p-s" class="search-form-input">Kopen</label>
+                        </fieldset>
+                    </div>
+                    <label class="search-form-slach">/</label>
+                    <div id="mega-sitesearch" class="search-form products inactive">
+                        <fieldset>
+                            <label for="mega-p-s" class="search-form-input">Huren</label>
+                        </fieldset>
+                    </div>
+                    {{searchform.kopen}}
+                </div>
+                <div class="searchForm">
+                    <div class="search-form search-input-form" id="searchform" method="post" action="">
+                        <fieldset>
+                            {% csrf_token %}
+                            <table class="search-form-table">
+                                <tbody>
+                                    <tr>
+                                        <th></th>
+                                        <td>
+                                          {{ searchform.plaats_postcode_refnummer.errors }}
+                                          {{ searchform.plaats_postcode_refnummer}}
+                                            <!-- <input class="search-form-input" id="id_plaats_postcode" name="plaats_postcode" placeholder="Zoek op referentienummer, plaats of postcode" type="text"> -->
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!--<hr class="searchhr">-->
+                            <button id="searchButtonOk" class="button" name="searchbtngo" type="submit"></button>
+                        </fieldset>
+                    </div>
+                </div>
+                <div id="kopen_hiddenfield"></div>
+            </section>
+            <!--<section class="geavanceerdSearch" id="geavanceerdSearch">
+                <div class="geavanceerdSearch-first">
+                    <div class="col-sm-4">
+                        <select class="selectpicker" title="Type" id="type">
+                          <option>Huis</option>
+                          <option>Appartement</option>
+                          <option>Villa</option>
+                        </select>
+                        {{searchform.pand_type}}
+                    </div>
+                    <div class="col-sm-4">
+                        {{searchform.aantal_slaapkamers}}
+                    </div>
+                    <div class="col-sm-4">
+                        {{searchform.aantal_badkamers}}
+                    </div>
+                </div>
+                <div class="geavanceerdSearch-second">
+                    <div class="col-xs-6 SliderDiv">
+                        <div class="secondPrijs prijsMin">
+                            <span>€ </span><span id="prijsSliderValMin">0</span>
+                        </div>
+                        <div class="secondPrijs prijs">
+                            <span>Prijs</span>
+                        </div>
+                        <div class="secondPrijs prijsMax">
+                            <span>€ </span><span id="prijsSliderValMax">1000000</span>
+                        </div>
+                        <input id="prijsSliderKopen" data-slider-id="prijsSliderKopenID" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000000" data-slider-step="1000" data-slider-tooltip="hide" data-slider-value="[0,1000000]"/>
+                        <input id="prijsSliderHuren" data-slider-id="prijsSliderHurenID" type="text" class="span2" value="" data-slider-min="0" data-slider-max="5000" data-slider-step="100" data-slider-tooltip="hide" data-slider-value="[0,5000]" />
+                        {{ searchform.prijsSliderKopen }}
+                        {{ searchform.prijsSliderHuren }}
+                        {{ searchform.tagsSearch }}
+                        <script type="text/javascript">
+                            // Slider With JQuery
+                            $("#prijsSliderKopen").slider({
+                            });
+                            $("#prijsSliderKopen").on("slide", function(slideEvt) {
+                                value = String(slideEvt.value);
+                                values = value.split(',');
+                                min = values[0];
+                                max = values[1];
+                                $("#prijsSliderValMin").text(min);
+                                $("#prijsSliderValMax").text(max);
+                            });
+
+                            $("#prijsSliderHuren").slider({
+                            });
+                            $("#prijsSliderHuren").on("slide", function(slideEvt) {
+                                value = String(slideEvt.value);
+                                values = value.split(',');
+                                min = values[0];
+                                max = values[1];
+                                $("#prijsSliderValMin").text(min);
+                                $("#prijsSliderValMax").text(max);
+                            });
+                        </script>
+                    </div>
+                    <div class="col-xs-6 SliderDiv">
+                        <div class="secondPrijs prijsMin">
+                            <span id="oppSliderValMin">0</span><span> m²</span>
+                        </div>
+                        <div class="secondPrijs prijs">
+                            <span>Oppervlakte</span>
+                        </div>
+                        <div class="secondPrijs prijsMax">
+                            <span id="oppSliderValMax">10000</span><span> m²</span>
+                        </div>
+                        <input id="oppSliderKopen" data-slider-id="oppSliderKopenID" type="text" class="span2" value="" data-slider-min="0" data-slider-max="10000" data-slider-step="1" data-slider-tooltip="hide" data-slider-value="[0,10000]"/>
+                        <script type="text/javascript">
+                            // Slider With JQuery
+
+                            $("#oppSliderKopen").slider({
+                                scale: 'logarithmic',
+                            });
+                            $("#oppSliderKopen").on("slide", function(slideEvt) {
+                                value = String(slideEvt.value);
+                                values = value.split(',');
+                                min = values[0];
+                                max = values[1];
+                                $("#oppSliderValMin").text(min);
+                                $("#oppSliderValMax").text(max);
+                            });
+
+                        </script>
+
+                    </div>
+                </div>
+                <div class="geavanceerdSearch-thirth">
+                </div>
+                <button id="geavanceerdButton" class="geavanceerdButton" type="button">Geavanceerd</button>
+            </section>-->
+        </form>
+    </div>
+</div>
+<script>
+
+$(function() {
+    $("#advancedSearchForm").hide();
+    $('.form-input > .search-icon').hide();
+    $("#searchButton").click(function() {
+        if ($("#advancedSearchForm").css('display') == 'none') {
+            if ($( window ).width() <= 480) {
+                $("html, body").animate({ scrollTop: 0 }, "normal");
+            }
+            $("#advancedSearchForm").show();
+        } else {
+            $("#advancedSearchForm").hide();
+        }
+        $(".buy-media").toggleClass("no-pointerevent");
+        $("#mega-search").toggleClass("setSearchHeight");
+        $("#geavanceerdButton").toggleClass("geavanceerdButtonVisible");
+        if ($(".geavanceerdSearch-first").hasClass("visible")) {
+            $("#geavanceerdSearch").removeClass("geavanceerdSearchHeight");
+            $(".geavanceerdSearch-first").removeClass("visible");
+            $(".geavanceerdSearch-second").removeClass("visible");
+            $(".geavanceerdSearch-thirth").removeClass("visible");
+        }
+        $("#prijsSliderHurenID").css("display", "none");
+    });
+
+
+$("#mega-productsearch").click(function() {
+    $("#prijsSliderKopenID").css("display", "inline-block");
+    $("#prijsSliderHurenID").css("display", "none");
+    $("#prijsSliderValMin").text($(".min-slider-handle").attr("aria-valuenow"));
+    $("#prijsSliderValMax").text($(".max-slider-handle").attr("aria-valuenow"));
+})
+$("#mega-sitesearch").click(function() {
+    $("#prijsSliderKopenID").css("display", "none");
+    $("#prijsSliderHurenID").css("display", "inline-block");
+    $("#prijsSliderValMin").text($("#prijsSliderHurenID div .min-slider-handle").attr("aria-valuenow"));
+    $("#prijsSliderValMax").text($("#prijsSliderHurenID div .max-slider-handle").attr("aria-valuenow"));
+})
+$("#advancedSearchForm").bind("keypress", function (e) {
+    if (e.keyCode == 13) {
+        $("#btnSearch").attr('value');
+        return false;
+    }
+});
+
+
+  var hiddenfield = $('#kopen_hiddenfield');
+
+  hiddenfield.val(function( index, value ) {
+      return 1;
+  });
+
+
+function change(){
+  // looks for the activated element 'huren' or 'kopen' and gets the value
+  var x = $('.active');
+  var label = x.find("fieldset").find("label");
+  var output = label.text();
+
+  console.log(output);
+
+  var hiddenfield = $('#kopen_hiddenfield');
+
+  if(output== "Kopen"){
+    hiddenfield.val(function( index, value ) {
+      return 1;
+  });
+  }
+  else if(output =="Huren"){
+    hiddenfield.val(function( index, value ) {
+      return 2;
+  });
+  }
+
+console.log(hiddenfield.val());
+}
+});
+</script>

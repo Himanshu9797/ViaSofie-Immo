@@ -1,0 +1,44 @@
+{% extends 'webapp/base.html' %} {% load inplace_edit %} {% load staticfiles %} {% block header %} {% inplace_toolbar %}
+
+<link rel="stylesheet" href="{% static 'webapp/css/referenties.css' %}" type="text/css" media="screen" />
+
+<title>Referenties | Via Sofie</title>
+
+	<!--meta data-->
+	<meta name="description" content="Bekijk panden die reeds verkocht werden door Via Sofie.">
+	<meta name="keywords" content="referenties, verkocht, immo, immobilien, immobiliën, vastgoed, advies, vastgoedmakelaar, sofie, andriesen, via sofie, viasofie, mussenhoevenlaan, 2530, boechout, lint, kontich, antwerpen, te koop, te huur, wonen, huren, kopen, makelaar, huis, biv">
+	<meta name="author" content="Sacha Van den Wyngaert">
+
+{% endblock header %}
+
+{% block content %}
+{% include "webapp/submenu.html" %}
+<div class="ref-body">
+    <ul class="cards">
+
+    {% for pand in panden %}
+      <li class="cards__item">
+        <div class="card">
+        <img class="sold-card image-responsive" src="{% static 'webapp/images/verkocht_bw.png' %}" alt="">
+        {% for thumbnail in thumbnails %}
+            {% if thumbnail.pand.referentienummer == pand.referentienummer %}
+                <div class="card__image" style="background-image: url(/media/{{thumbnail.docfile}});"></div>
+            {% endif %}
+        {% endfor %}
+
+        <div class="card__content">
+            <div class="card__title">{{pand.straatnaam}} {{pand.huisnr}} - {{pand.postcode}} {{pand.plaats}}</div>
+            {% if pand.review %}
+              <p class="card__text">{{pand.review}}</p>
+            {% else %}
+              <p class="card__text">{{pand.beschrijving}}</p>
+            {% endif %}
+            <!--<button class="btn btn--block card__btn">Button</button>-->
+        </div>
+        </div>
+    </li>
+    {% endfor %}
+
+    </ul>
+</div>
+{% endblock content %}

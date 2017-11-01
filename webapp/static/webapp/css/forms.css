@@ -1,0 +1,346 @@
+/*
+  #####################################################################################################################################################################
+  Algemene opmaak van forms (toegepast op login form)
+  #####################################################################################################################################################################
+*/
+.forms form {
+  display: block;
+  position: relative;
+  width: 250px;
+  margin: 20px auto;
+  padding: 20px 20px 15px 20px;
+  background-color: #e8e8e8;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: inset 1px 1px 0 0 rgba(255,255,255,0.2), inset -1px -1px 0 0 rgba(0,0,0,0.2);
+  -moz-box-shadow: inset 1px 1px 0 0 rgba(255,255,255,0.2), inset -1px -1px 0 0 rgba(0,0,0,0.2);
+  box-shadow: inset 1px 1px 0 0 rgba(255,255,255,0.2), inset -1px -1px 0 0 rgba(0,0,0,0.2);
+}
+
+.forms table {
+  width: 100%;
+}
+
+.forms label {
+  display: none;
+}
+
+.forms p {
+  line-height: 0.8;
+  font-size: 80%;
+  padding: 3px;
+  margin: 0 0 5px;
+}
+
+.forms p a {
+  font-weight: normal;
+  color: #0d3532;
+}
+
+.errorlist {
+  color: red;
+  list-style: none;
+  float: right;
+  font-size: 85%;
+  margin-bottom: 0px;
+}
+
+.forms input[name="password"]
+{
+  -webkit-text-security: disc;
+}
+
+.forms input[type="text"], input[type="email"], input[type="password"], input[type="number"], select {
+  padding: 10px 12px 10px 12px;
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  border: 1px solid rgba(255,255,255,0.5);
+  background-color: #fff;
+  color: #333;
+  font-size: 1em;
+  font-weight: 300;
+  outline: none;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-transition: border-color 300ms 0 ease;
+  -moz-transition: border-color 300ms 0 ease;
+  transition: border-color 300ms 0 ease;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.forms input[type="submit"] {
+  -webkit-appearance: none;
+  height: 40px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  background-color: #0d3532;
+  text-transform: uppercase;
+  color: #fff;
+  border: 0px;
+  float: right;
+  margin: 0;
+  outline: none;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.forms input[type="submit"]:hover {
+  background-color: #5e98a8;
+}
+.forms input[type="submit"]:active {
+  background-color: #4a7b89;
+}
+
+/*
+  #####################################################################################################################################################################
+  Registreren form
+  #####################################################################################################################################################################
+*/
+.registration form {
+  width: 450px;
+  margin: 20px auto;
+  padding: 10px 20px 22px 20px;
+  max-width: 100%;
+}
+
+.registration label {
+  display: inherit;
+  width: 70px;
+}
+
+.registration h3 {
+  text-align: center;
+  padding-bottom: 10px;
+  font-weight: bold;
+}
+
+.registration p {
+  padding-top: 15px;
+}
+
+/*
+  #####################################################################################################################################################################
+  Wachtwoord reset form
+  #####################################################################################################################################################################
+*/
+.passwordreset form {
+  padding: 10px 20px 20px 20px;
+  width: 700px;
+  max-width: 75%;
+}
+
+.passwordreset h3, h5 {
+  padding-left: 3px;
+  margin-bottom: 5px;
+}
+
+.passwordreset input {
+  margin-bottom: 5px;
+}
+
+.passwordreset input[type="submit"] {
+  margin-top: 5px;
+}
+
+/*
+  #####################################################################################################################################################################
+  Wachtwoord reset sent email form
+  #####################################################################################################################################################################
+*/
+.passwordresetsent h4 {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.passwordresetsent h3 {
+  margin-bottom: 20px;
+}
+
+.passwordresetsent {
+  display: block;
+  position: relative;
+  width: 700px;
+  max-width: 75%;
+  text-align: center;
+  margin: 20px auto;
+  padding: 20px 20px 55px 20px;
+  background-color: #e8e8e8;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: inset 1px 1px 0 0 rgba(255,255,255,0.2), inset -1px -1px 0 0 rgba(0,0,0,0.2);
+  -moz-box-shadow: inset 1px 1px 0 0 rgba(255,255,255,0.2), inset -1px -1px 0 0 rgba(0,0,0,0.2);
+  box-shadow: inset 1px 1px 0 0 rgba(255,255,255,0.2), inset -1px -1px 0 0 rgba(0,0,0,0.2);
+}
+
+.buttonpasswordreset {
+  -webkit-appearance: none;
+  height: 40px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  background-color: #0d3532;
+  text-transform: uppercase;
+  color: #fff;
+  border: 0px;
+  float: right;
+  margin: 0;
+  outline: none;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.buttonpasswordreset:hover {
+  background-color: #5e98a8;
+  color: #fff;
+  text-decoration: none;
+}
+.buttonpasswordreset:active {
+  background-color: #4a7b89;
+  color: #fff;
+  text-decoration: none;
+}
+
+/*
+  #####################################################################################################################################################################
+  Wachtwoord reset new password form
+  #####################################################################################################################################################################
+*/
+.passwordresetnew form {
+  padding: 20px 20px 50px 20px;
+  width: 400px;
+}
+
+.passwordresetnew {
+  text-align: center;
+}
+
+.passwordresetnew h4 {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.passwordresetnew h3 {
+  margin-bottom: 10px;
+}
+
+
+/*
+  #####################################################################################################################################################################
+  Wachtwoord reset done form
+  #####################################################################################################################################################################
+*/
+.passwordresetdone h4 {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.passwordresetdone h3 {
+  margin-bottom: 20px;
+}
+
+.passwordresetdone {
+  display: block;
+  position: relative;
+  width: 500px;
+  max-width: 75%;
+  text-align: center;
+  margin: 20px auto;
+  padding: 20px 20px 55px 20px;
+  background-color: #e8e8e8;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: inset 1px 1px 0 0 rgba(255,255,255,0.2), inset -1px -1px 0 0 rgba(0,0,0,0.2);
+  -moz-box-shadow: inset 1px 1px 0 0 rgba(255,255,255,0.2), inset -1px -1px 0 0 rgba(0,0,0,0.2);
+  box-shadow: inset 1px 1px 0 0 rgba(255,255,255,0.2), inset -1px -1px 0 0 rgba(0,0,0,0.2);
+}
+
+
+/*
+  #####################################################################################################################################################################
+  Account geactiveerd form
+  #####################################################################################################################################################################
+*/
+.activatedaccount h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.activatedaccount h3 {
+  margin-bottom: 20px;
+}
+
+.activatedaccount {
+  display: block;
+  position: relative;
+  width: 500px;
+  max-width: 75%;
+  text-align: center;
+  margin: 20px auto;
+  padding: 20px 20px 55px 20px;
+  background-color: #e8e8e8;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: inset 1px 1px 0 0 rgba(255,255,255,0.2), inset -1px -1px 0 0 rgba(0,0,0,0.2);
+  -moz-box-shadow: inset 1px 1px 0 0 rgba(255,255,255,0.2), inset -1px -1px 0 0 rgba(0,0,0,0.2);
+  box-shadow: inset 1px 1px 0 0 rgba(255,255,255,0.2), inset -1px -1px 0 0 rgba(0,0,0,0.2);
+}
+
+
+/*
+  #####################################################################################################################################################################
+  Ebook form
+  #####################################################################################################################################################################
+*/
+
+.ebookform form {
+  padding: 20px 20px 60px 20px;
+  width: 600px;
+}
+
+.ebookform h5 {
+  margin: 10px 0;
+}
+
+.ebookform label {
+  display: inline;
+}
+
+
+/*
+  #####################################################################################################################################################################
+  Partners form
+  #####################################################################################################################################################################
+*/
+.partnersform h3 {
+  text-align: center;
+  padding-bottom:20px;
+}
+
+.partnersform label {
+  display: inline;
+}
+
+.partnersform form {
+  padding: 20px 20px 60px 20px;
+  width: 600px;
+}
+
+/*
+  #####################################################################################################################################################################
+  Captcha
+  #####################################################################################################################################################################
+*/
+.g-recaptcha > div > div {
+  width: 100% !important;
+}
+
+.g-recaptcha > div > div > iframe {
+  width: 100% !important;
+}

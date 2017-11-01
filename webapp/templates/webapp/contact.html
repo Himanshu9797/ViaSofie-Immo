@@ -1,0 +1,81 @@
+{% extends 'webapp/base.html' %} {% load inplace_edit %} {% load staticfiles %} {% block header %} {% inplace_toolbar %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'webapp/css/contact.css' %}" />
+
+<title>Contact | Via Sofie</title>
+
+<!--meta data-->
+<meta name="description" content="Een vraag of liever een afspraak maken op kantoor? Neem contact op!">
+<meta name="keywords" content="contact, contacteren, telefoonnummer, email, address, adres, immo, immobilien, immobiliën, vastgoed, advies, vastgoedmakelaar, sofie, andriesen, via sofie, viasofie, mussenhoevenlaan, 2530, boechout, lint, kontich, antwerpen, te koop, te huur, wonen, huren, kopen, makelaar, huis, biv">
+<meta name="author" content="Sacha Van den Wyngaert">
+
+{% endblock header %}
+
+{% block content %}
+<div class="main">
+  <div class="bio"><img class="profile-img" src="{% static 'webapp/images/Sofie.jpg' %}"/>
+    <h3 class="header-contact">Via Sofie</h3>
+    <!--<p>Een vraag of liever een afspraak op kantoor, laat het me weten!</p>-->
+    <p style="font-size: 0.75em">* Het kantoor is voorzien van een gratis parkeerplaats.</p>
+    <a class="bio-link">Mussenhoevelaan 101</a>
+    <a class="bio-link">2530 Boechout<i class="fa fa-map-marker"></i></a>
+    <a class="bio-link">0483 71 37 10<i class="fa fa-phone"></i></a>
+    <a class="bio-link" href="mailto:hello@viasofie.be">hello@viasofie.be<i class="fa fa-envelope"></i></a>
+  </div>
+  <div class="contact">
+    <form id="form" role="form" method="post">
+      {% csrf_token %}
+      <legend class="header-contact">Een vraag of liever een afspraak op kantoor, laat het me weten!</legend>
+      <table>
+        {{ form.non_field_errors }}
+        <div class="fieldWrapper">
+            {{ form.name.errors }}
+            {{ form.name }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.email.errors }}
+            {{ form.email }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.phone.errors }}
+            {{ form.phone }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.message.errors }}
+            {{ form.message }}
+        </div>
+      </table>
+      <fieldset>
+        <button type="submit" value="Submit" id="btn-submit">Verstuur</button>
+      </fieldset>
+    </form>
+    <!-- <form id="form" role="form" method="post">
+      {% csrf_token %}
+      <legend class="header-contact">Een vraag of liever een afspraak op kantoor, laat het me weten!</legend>
+      <fieldset>
+        <label class="fa fa-user" for="name-input" aria-hidden="true"></label>
+        <input type="text" placeholder="Naam..." id="name-input" name="name"/>
+      </fieldset>
+      <fieldset>
+        <label class="fa fa-envelope" for="email-input" aria-hidden="true"></label>
+        <input type="email" placeholder="Email..." id="email-input" name="email"/>
+      </fieldset>
+      <fieldset>
+        <label class="fa fa-phone" for="phone-input" aria-hidden="true"></label>
+        <input type="phone" placeholder="Telefoon/GSM nummer..." id="phone-input" name="phone"/>
+      </fieldset>
+      <fieldset>
+        <label class="fa fa-comment" for="message-input" aria-hidden="true"></label>
+        <textarea placeholder="Uw bericht..." id="message-input" name="message"></textarea>
+      </fieldset>
+      <fieldset>
+        <button type="submit" value="Submit" id="btn-submit">Verstuur</button>
+      </fieldset>
+    </form> -->
+  </div>
+</div>
+<div class="map">
+    <iframe src="http://www.mapi.ie/create-google-map/map.php?width=100%&amp;height=400&amp;hl=en&amp;q=Mussenhoevelaan%20101%2C%202530%20Boechout+(Via%20Sofie)&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=A&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"><a href="http://www.mapsdirections.info/fr/mesurer-distance-surface-google-maps.html">Mesurer distance avec Google Maps</a> en <a href="http://www.mapsdirections.info/fr/">www.mapsdirections.info/nl/</a></iframe>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,483 @@
+{% extends 'webapp/base.html' %} {% load humanize %} {% load staticfiles %} {% load qr_tags %}{% block header %}
+<script type='text/javascript' src="{% static 'webapp/scripts/jquery.flexslider.js' %}"></script>
+<script type='text/javascript' src="{% static 'webapp/scripts/jquery.flexisel.js' %}"></script>
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB6_wuqD24-vpeVcw2hZwwcaWsTz8IgJEM"></script>
+
+<link rel="stylesheet" href="{% static 'webapp/css/flexslider.css' %}" type="text/css" media="screen" />
+<link rel="stylesheet" href="{% static 'webapp/css/gallery.css' %}" type="text/css" media="screen" />
+<link rel="stylesheet" href="{% static 'webapp/css/pand.css' %}" type="text/css" media="screen" />
+
+<title>{{pand.straatnaam}} {{pand.huisnr}}, {{pand.postcode}} {{pand.plaats}} | ViaSofie</title>
+
+<!--Facebook meta data-->
+<meta property="og:url"                content="www.viasofie.be/pand/{{ pand.referentienummer}}" />
+<meta property="og:type"               content="article" />
+<meta property="og:title"              content="Pand {{pand.handelstatus}}: {{pand.straatnaam}} {{pand.huisnr}}, {{pand.postcode}} {{pand.plaats}}" />
+<meta property="og:description"        content="{{pand.beschrijving}}" />
+<meta property="og:image"              content="/media/{{thumbnail.docfile}}" />
+<meta property="og:site_name"          content="Via Sofie"/>
+<meta property="app_id"                content="1007959369240278"/>
+<!--End of Facebook meta data-->
+
+
+{% endblock header %} {% block content %}
+<!-- Twitter widgets -->
+<script>
+    window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+            t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+
+        t._e = [];
+        t.ready = function(f) {
+            t._e.push(f);
+        };
+
+        return t;
+    }(document, "script", "twitter-wjs"));
+</script>
+<!-- End of Twitter widgets -->
+
+<!-- pintrest widgets -->
+<script async defer src="//assets.pinterest.com/js/pinit.js"></script>
+<!-- End of pintrest widgets -->
+
+<!--Gallery modal-->
+<script>
+    $(document).ready(function(){
+        $(".card").click(function(){
+        var t = $(this).attr("src");
+        $(".gallery-modal-body").html("<img src='"+t+"' class='modal-img'>");
+        $("#myModal").modal();
+        });
+
+        // $("video").click(function(){
+        // var v = $("video > source");
+        // var t = v.attr("src");
+        // $(".modal-body").html("<video class='model-vid' controls><source src='"+t+"' type='video/mp4'></source></video>");
+        // $("#myModal").modal();
+        // });
+        });//EOF Document.ready
+</script>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="gallery-modal-content">
+            <div class="gallery-modal-body">
+                <p>Some text in the modal.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End of Gallery modal-->
+
+{% include "webapp/submenu.html" %}
+    <div class="buy-single-single">
+        <div class="buying-top">
+            <!--NEW-->
+            <div class="col-sm-7 buy-sin">
+                <div class="row align-items-start" id="pand-details">
+
+                  {% if thumbnail %}
+                  <div class="col">
+                      <img src="/media/{{thumbnail.docfile}}" class="card img-responsive" id="big-gallery-img">
+                  </div> <!--col-->
+                  {% endif %}
+
+                    <div class="col">
+
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" id="navtab-li-pand" class="active-on-load"><a href="#beschrijving" aria-controls="beschrijving" role="tab" data-toggle="tab">Beschrijving</a></li>
+                            {% if pand_details_col1 or pand_details_col2 %}<li role="presentation" id="navtab-li-pand"><a href="#details" aria-controls="details" role="tab" data-toggle="tab">Details</a></li>{% endif %}
+                            {% if pand_documenten %}<li role="presentation" id="navtab-li-pand"><a href="#plan" aria-controls="plan" role="tab" data-toggle="tab">Plan</a></li>{% endif %}
+                            {% if pand_documenten %}<li role="presentation" id="navtab-li-pand"><a href="#documenten" aria-controls="documenten" role="tab" data-toggle="tab">Documenten</a></li>{% endif %}
+                            {% if pand_epc_col1 or pand_epc_col2 %}<li role="presentation" id="navtab-li-pand"><a href="#epc" aria-controls="epc" role="tab" data-toggle="tab">Vlaamse codex R.O. en EPC</a></li>{% endif %}
+                            <li role="presentation" id="navtab-li-pand"><a href="javascript:window.print()">Print</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="beschrijving">
+                                <!--BESCHRIJVING-->
+                                    <div class="col-sm-8">
+                                        <h3>{{pand.straatnaam}} {{pand.huisnr}} - {{pand.postcode}} {{pand.plaats}}</h3>
+                                        <!--<h4>Beschrijving</h4>-->
+                                        <p class="pand-description">{{ pand.beschrijving|safe }}</p>
+                                        {% if pand.beschrijving_2 %}
+                                        <p class="pand-description">{{ pand.beschrijving_2|safe }}</p>
+                                        {% endif %}
+                                        <div>
+                                            <a href="/contact" class="hvr-sweep-to-right more">Geïnteresseerd in dit pand, neem contact op.</a>
+                                        </div>
+                                    </div> <!--col-sm-8-->
+
+                                    <div class="col-sm-1" style="margin-left: -15px;">
+                                    </div> <!--col-sm-1-->
+
+                                    <div class="col-sm-3">
+                                        <div class="buy-sin-single">
+                                            <div class="col-sm-5 middle-side immediate">
+
+                                                <table class="table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Status: </td>
+                                                            {% if pand.handelstatus.status == "te koop"%}
+                                                                <td>Te koop</td>
+                                                            {% else %}
+                                                                <td>Te huur</td>
+                                                            {% endif %}
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Prijs: </td>
+                                                            {% if pand.handelstatus.status == "te koop"%}
+                                                                <td>€ {{pand.prijs|intcomma}}</td>
+                                                            {% else %}
+                                                                <td>€ {{pand.prijs|intcomma}} / maand</td>
+                                                            {% endif %}
+                                                        </tr>
+                                                        <tr>
+                                                            <td>ref.: </td>
+                                                            <td style="white-space: nowrap;">{{ pand.referentienummer }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><i class="fa fa-bed"></i></td>
+                                                            <td>{{pand.slaapkamers}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><i class="fa fa-bathtub"></td>
+                                                            <td>{{pand.badkamers}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><i class="fa fa-car"></i></td>
+                                                            {% if pand.parkeerplaats %}
+                                                                <td>Ja</td>
+                                                            {% else %}
+                                                                <td>Nee</td>
+                                                            {% endif %}
+                                                        </tr>
+                                                    </tbody>
+                                                </table> <!--table-->
+
+                                            </div> <!--col-sm-5 middle-side immediate-->
+
+                                            <div class="clearfix"></div> <!--clearfix-->
+                                        </div> <!--buy-sin-single-->
+                                    </div> <!--col-sm-3-->
+                                <!--END OF BESCHRIJVING-->
+                            </div>
+
+                            {% if pand_details_col1 or pand_details_col2 %}
+                            <div role="tabpanel" class="tab-pane" id="details">
+                                <!--DETAILS-->
+                                <div class="col-sm-12">
+                                    <h3>Details</h3>
+                                    <div class="row" id="col-body">
+
+                                        <div class="col-sm-6">
+                                            {% for pand_detail in pand_details_col1 %}
+                                                <div class="detail-line"><div class="left">{{pand_detail.naam}}</div>{% if pand_detail.waarde %}<div class="right"> {{pand_detail.waarde}}</div>{% endif %}</div>
+                                            {% endfor %}
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            {% for pand_detail in pand_details_col2 %}
+                                                <div class="detail-line"><div class="left">{{pand_detail.naam}}</div>{% if pand_detail.waarde %}<div class="right"> {{pand_detail.waarde}}</div>{% endif %}</div>
+                                            {% endfor %}
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!--END OF DETAILS-->
+                            </div>
+                            {% endif %}
+
+                            <!-- style="visibility: hidden;" -->
+                            {% if pand_documenten %}
+                            <div role="tabpanel" class="tab-pane" id="plan">
+                                <div id="plan" class="documenten">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h3>Plan</h3>
+
+                                            <div class="row" id="col-body">
+
+                                                {% for pand_document in pand_documenten %}
+                                                  {% if pand_document.plan %}
+                                                    <div class="col-sm-4" id="doc-row">
+                                                        <a target="_blank" href="/media/{{pand_document.docfile}}" class="document">
+                                                            <i class="fa fa-file-pdf-o"></i>
+                                                            {{pand_document.naam}}
+                                                        </a>
+                                                    </div>
+                                                  {% endif %}
+                                                {% endfor %}
+
+                                            </div><!--<div class="row">-->
+
+                                        </div><!--<div class="col-md-12 col-lg-10 col-lg-offset-2">-->
+                                    </div><!--<div class="row">-->
+                                </div><!--<div id="documenten" class="documenten">-->
+                            </div> <!--<div role="tabpanel" class="tab-pane" id="documenten">-->
+                            {% endif %}
+
+                            {% if pand_documenten %}
+                            <div role="tabpanel" class="tab-pane" id="documenten">
+                                <div id="documenten" class="documenten">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h3>Documenten</h3>
+
+                                            <div class="row" id="col-body">
+
+                                                {% for pand_document in pand_documenten %}
+                                                  {% if pand_document.plan %}
+                                                  {% else %}
+                                                  <div class="col-sm-4" id="doc-row">
+                                                      <a target="_blank" href="/media/{{pand_document.docfile}}" class="document">
+                                                          <i class="fa fa-file-pdf-o"></i>
+                                                          {{pand_document.naam}}
+                                                      </a>
+                                                  </div>
+                                                  {% endif %}
+                                                {% endfor %}
+
+                                            </div><!--<div class="row">-->
+
+                                        </div><!--<div class="col-md-12 col-lg-10 col-lg-offset-2">-->
+                                    </div><!--<div class="row">-->
+                                </div><!--<div id="documenten" class="documenten">-->
+                            </div> <!--<div role="tabpanel" class="tab-pane" id="documenten">-->
+                            {% endif %}
+
+                            {% if pand_epc_col1 or pand_epc_col2 %}
+                            <div role="tabpanel" class="tab-pane" id="epc">
+                                <!--R.O. EN EPC-->
+                                <div class="col-sm-12">
+                                    <h3>Vlaamse codex R.O. en EPC</h3>
+                                    <div class="row" id="col-body">
+
+                                        <div class="col-sm-6">
+                                            {% for epc in pand_epc_col1 %}
+                                                <div class="detail-line"><div class="left">{{epc.naam}}</div>{% if epc.waarde %}<div class="right"> {{epc.waarde}}</div>{% endif %}</div>
+                                            {% endfor %}
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            {% for epc in pand_epc_col2 %}
+                                                <div class="detail-line"><div class="left">{{epc.naam}}</div>{% if epc.waarde %}<div class="right"> {{epc.waarde}}</div>{% endif %}</div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--END OF R.O. EN EPC-->
+                            </div> <!--<div role="tabpanel" class="tab-pane" id="epc">-->
+                            {% endif %}
+                        </div>
+
+                    </div> <!--col-->
+
+                </div> <!--row align-items-start-->
+            </div> <!--col-sm-7 buy-sin-->
+
+            <div class="col-sm-5 buy-sin">
+                <div id="gallery" class="container-fluid">
+                    {% for i in max_picture_count %}
+                        <div class="side-img">
+                            {% for foto in fotos %}
+                                {% if forloop.counter0 == i %}
+                                    <img src="/media/{{foto.docfile}}" class="card img-responsive" id="shown"/>
+                                {% else %}
+                                    <img src="/media/{{foto.docfile}}" class="card img-responsive" id="hidden"/>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+
+
+                <script type = "text/javascript">
+
+                    var changed = false;
+
+                    function displayNextImage() {
+
+                        $( ".side-img" ).each(function( i ) {
+
+                            $(this).children( ".card" ).each(function( j ) {
+                                if (changed == false && $(this).attr('id') == "shown") {
+                                    $(this).attr('id', 'hidden');
+                                    changed = true;
+                                }
+                                else if (changed == true) {
+                                    $(this).attr("id", "shown");
+                                    changed = null;
+                                }
+                            });
+
+                            if (changed == true) {
+                                $(this).children('.card').first().attr("id", "shown");
+                            }
+
+                            changed = false;
+
+                        });
+
+                    }
+
+                    function startTimer() {
+                        setInterval(function() {
+                            displayNextImage();
+                        }, 10000);
+                    }
+
+                    function getRandomInt(min, max) {
+                        return Math.floor(Math.random() * (max - min + 1)) + min;
+                    }
+
+                    $( window ).load(function() {
+                        if ({{ fotos|length }} > 6) {
+                            startTimer();
+                        }
+
+                    });
+                </script>
+
+
+
+                <div class="map-buy-single1">
+                    <iframe
+                    src="http://www.mapi.ie/create-google-map/map.php?width=100%&amp;height=400&amp;hl=en&amp;q={{pand.straatnaam}}%20{{pand.huisnr}}%2C%20{{pand.postcode}}%20{{pand.plaats}}+({{pand.straatnaam}}%20{{pand.huisnr}})&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=A&amp;output=embed"
+                    frameborder="0"
+                    scrolling="no"
+                    marginheight="0"
+                    marginwidth="0"
+                    >
+                      <a href="http://www.mapsdirections.info/fr/mesurer-distance-surface-google-maps.html">Mesurer distance avec Google Maps</a> en <a href="http://www.mapsdirections.info/fr/">www.mapsdirections.info/nl/</a>
+                    </iframe>
+                </div> <!--map-buy-single-->
+            </div> <!--col-sm-5 buy-sin-->
+            <div class="row" id="social-row">
+                <div class="col-sm-12">
+                    <div class="social-share">
+                        <h3>Deel deze pagina</h3>
+                        <div>
+                            <div class="row" id="col-body">
+                                <!--<ul class="social">
+                                    <a class="fa fa-envelope" href="mailto:hello@viasofie.be" title="Email"></a>
+
+                                    <a class="fa fa-facebook" target="_blank" href="#" title="Facebook"></a>
+
+                                    <a class="fa fa-pinterest" target="_blank" href="#" title="Pinterest"></a>
+
+                                    <a class="fa fa-twitter" target="_blank" href="#" title="Twitter"></a>
+                                </ul>-->
+                                <div class="mn-social-bottom-c" align="center">
+                                    <!--<p>Deel deze pagina:</p>-->
+                                    <a class="mn-social-bottom"><i class="fa fa-facebook"></i></a>
+                                    <a class="mn-social-bottom"><i class="fa fa-twitter"></i></a>
+                                    <a class="mn-social-bottom"><i class="fa fa-linkedin"></i></a>
+                                    <a class="mn-social-bottom"><i class="fa fa-google-plus"></i></a>
+                                    <a class="mn-social-bottom"><i class="fa fa-pinterest-p"></i></a>
+                                    <a class="mn-social-bottom"><i class="fa fa-envelope"></i></a>
+                                    <!--<a class="mn-social-bottom" onclick="$('#mn-social-bottom-hidden').slideToggle();$('.fa-plus').toggleClass('mn-social-r')"><i class="fa fa-plus"></i></a>
+                                    <div id="mn-social-bottom-hidden">
+                                        <a class="mn-social-bottom"><i class="fa fa-tumblr"></i></a>
+                                        <a class="mn-social-bottom"><i class="fa fa-get-pocket"></i></a>
+                                        <a class="mn-social-bottom"><i class="fa fa-stumbleupon"></i></a>
+                                        <a class="mn-social-bottom"><i class="fa fa-reddit"></i></a>
+                                        <a class="mn-social-bottom"><i class="fa fa-envelope"></i></a>
+                                        <a class="mn-social-bottom"><i class="fa fa-delicious"></i></a>
+                                    </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!--buying-top-->
+
+            <!--QR-Code-->
+            <!--<div class="col-md-3" align="right">
+                {% qr_from_text url "size" %}
+            </div>-->
+            <!--End of QR-Code-->
+
+        <div class="clearfix"></div>
+    </div> <!--buy-single-single-->
+
+    {% if relatedPands %}
+    <div class="container">
+        <div class="future">
+            <h3>Gerelateerde Panden</h3>
+
+            <div class="content-bottom-in">
+                <ul id="flexiselDemo1">
+                    {% for related_pand in relatedPands %}
+                        <li>
+                            <div class="project-fur">
+
+                                {% for thumbnail in thumbnails_related %}
+                                    {% if thumbnail.pand.referentienummer == related_pand.referentienummer %}
+                                        <a href="/pand/{{ related_pand.referentienummer|cut:"-"}}"><img class="img-responsive" src="/media/{{thumbnail.docfile}}" alt="" /> </a>
+                                    {% endif %}
+                                {% endfor %}
+                                <div class="fur">
+                                    <div class="fur1">
+                                        {% if related_pand.handelstatus.status == "te koop"%}
+                                            <span class="fur-money">€ {{ related_pand.prijs|intcomma }}</span>
+                                        {% else %}
+                                            <span class="fur-money">€ {{ related_pand.prijs|intcomma }} / maand</span>
+                                        {% endif %}
+                                        <h6 class="fur-name"><a href="/pand/{{ related_pand.referentienummer|cut:"-"}}">{{ related_pand.straatnaam }}</a></h6>
+                                        <!-- <span>België</span> -->
+                                    </div> <!--fur1-->
+                                </div> <!--fur-->
+                            </div> <!--project-fur-->
+                        </li>
+                    {% endfor %}
+                </ul> <!--flexiselDemo1-->
+            </div> <!--content-bottom-in-->
+
+        </div> <!--future-->
+
+    </div> <!--container-->
+    {% endif %}
+
+<!--Flexislider-->
+<script type="text/javascript">
+    $(window).load(function() {
+        $("#flexiselDemo1").flexisel({
+            visibleItems: 3,
+            animationSpeed: 1000,
+            autoPlay: false,
+            autoPlaySpeed: 5000,
+            pauseOnHover: true,
+            enableResponsiveBreakpoints: true,
+            responsiveBreakpoints: {
+                portrait: {
+                    changePoint: 480,
+                    visibleItems: 1
+                },
+                landscape: {
+                    changePoint: 640,
+                    visibleItems: 2
+                },
+                tablet: {
+                    changePoint: 768,
+                    visibleItems: 3
+                }
+            }
+        });
+
+    });
+</script>
+<!--End of Flexislider-->
+
+<script type='text/javascript' src="{% static 'webapp/scripts/bootstrap-tagsinput.js' %}"></script>
+<script type='text/javascript' src="{% static 'webapp/scripts/pand.js' %}"></script>
+{% endblock content %}

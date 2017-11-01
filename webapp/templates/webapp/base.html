@@ -1,0 +1,100 @@
+{% load inplace_edit %}
+{% load staticfiles %}
+{% load  i18n %}
+<html>
+<head>
+	<!--- Basic Page Needs
+   ================================================== -->
+	<meta charset="utf-8">
+	<!--<title>Via Sofie</title>-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+	<!-- CSS
+    ================================================== -->
+	<link href='https://fonts.googleapis.com/css?family=Ropa+Sans:400,400italic' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="{% static 'webapp/bootstrap/css/bootstrap.min.css' %}">
+	<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+
+	<link rel="stylesheet" type="text/css" href="{% static 'webapp/css/styles.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'webapp/css/style.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'webapp/css/header.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'webapp/css/flags.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'webapp/css/forms.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'webapp/css/footer.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'webapp/css/bootstrap-select.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'webapp/css/bootstrap-slider.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'webapp/css/bootstrap-tagsinput.css' %}" media="screen" />
+
+	<!-- Google analytics
+  ================================================== -->
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-78546324-1', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
+   <!-- Script
+   ================================================== -->
+	<!-- <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script> -->
+	<script type='text/javascript' src="{% static 'webapp/scripts/jquery.min.js' %}"></script>
+	<script type='text/javascript' src="{% static 'webapp/scripts/jquery.mobile.customized.min.js' %}"></script>
+	<script type='text/javascript' src="{% static 'webapp/scripts/jquery.easing.1.3.js' %}"></script>
+	<script type='text/javascript' src="{% static 'webapp/bootstrap/js/bootstrap.min.js' %}"></script>
+	<script type='text/javascript' src="{% static 'webapp/scripts/header.js' %}"></script>
+	<script type='text/javascript' src="{% static 'webapp/scripts/responsiveslides.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'webapp/scripts/jquery.searchbox.js' %}"></script>
+	<script type="text/javascript" src="{% static 'webapp/scripts/velocity.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'webapp/scripts/bootstrap-select.js' %}"></script>
+	<script type="text/javascript" src="{% static 'webapp/scripts/bootstrap-slider.js' %}"></script>
+	<script type='text/javascript' src="{% static 'webapp/scripts/bootstrap-tagsinput.js' %}"></script>
+	<script type='text/javascript' src="{% static 'webapp/scripts/bootstrap3-typeahead.js' %}"></script>
+	<!-- enkel voor kerstmis <script type="text/javascript" src="{% static 'webapp/scripts/glitter.js' %}""></script> -->
+
+	<!-- Cookie Monster
+	================================================= -->
+
+	<script type='text/javascript' id="cookiebanner" src="{% static 'webapp/scripts/cookiebanner.js' %}" data-message="{% trans 'We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.' %}"></script>
+
+   <!-- Favicons
+	================================================== -->
+	<link rel='shortcut icon' type='image/x-icon' href="{% static 'webapp/images/favicon.jpg' %}"/>
+
+	<!-- Page blocks
+	================================================== -->
+	{% block header %}
+	{% endblock header %}
+
+</head>
+<body ng-app="">
+	<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1007959369240278',
+      xfbml      : true,
+      version    : 'v2.6'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+	{% include "webapp/header.html" %}
+
+	{% block content %}
+	{% endblock content %}
+
+	{% include "webapp/footer.html" %}
+</body>
+</html>

@@ -1,0 +1,21 @@
+{% extends 'webapp/base.html' %}
+{% load staticfiles %}
+
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{% static 'webapp/css/forms.css' %}" />
+
+<title>Activation | Via Sofie</title>
+
+<!--meta data-->
+<meta name="author" content="Sacha Van den Wyngaert">
+{% endblock header %}
+
+{% block content %}
+<div class="forms">
+	<div class="activatedaccount">
+    	<h3>Proficiat</h3>
+    	<h4>Je account is geactiveerd!</h4>
+   		<a href="/login" class="buttonpasswordreset">Login</a>
+	</div>
+</div>
+{% endblock content %}

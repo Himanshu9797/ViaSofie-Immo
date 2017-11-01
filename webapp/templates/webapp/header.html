@@ -1,0 +1,160 @@
+{% load inplace_edit %}{% load staticfiles %} {% load module_sander %}
+{% block header %}
+<link rel="stylesheet" href="{% static 'webapp/css/basic-icons.css' %}" type="text/css" media="screen" />
+{% endblock header %}
+<header>
+    {% load i18n %}
+    <!--START OF LANGUAGE SELECTOR-->
+    <!--<div id="language_menu" class="language_menu">
+        <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+            <input name="next" type="hidden" value="{{ redirect_to }}" />
+            <select name="language" onchange='this.form.submit()' class="languageselect">
+                {% get_current_language as LANGUAGE_CODE %} {% get_available_languages as LANGUAGES %} {% get_language_info_list for LANGUAGES as languages %} {% for language in languages %}
+                <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected="selected" {% endif %}>
+                    {{ language.code }}
+                </option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>-->
+    <!--END OF LANGUAGE SELECTOR-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <button type="button" id="collapseButton" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul id="InplaceEditList" class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+                    <li><a href="##"><div class="icon icon-basic-home" style="padding-top: 2px; display: inline-block;"></div><div style="display: block; float: right; margin-left: 5px;"> {{ user.email }}</div></a></li>
+                    <li><a href="/logout"><div class="icon icon-basic-download" style="padding-top: 2px; display: inline-block;"></div><div style="display: block; float: right; margin-left: 5px;"> Afmelden</div></a></li>
+                    {%else%}
+                    <li><a href="/register"><div class="icon icon-basic-sheet-pen" style="padding-top: 2px; display: inline-block;"></div><div style="display: block; float: right; margin-left: 5px;"> Registreren</div></a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#login"  id="loginbutton"><div class="icon icon-basic-upload" style="padding-top: 2px; display: inline-block;"></div><div style="display: block; float: right; margin-left: 5px;"> Aanmelden</div></a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="header-logo" class="header-logo centered">
+        <a href="/">
+            <img class="img-responsive" src="{% static 'webapp/images/def logos via sofie - RGB-08.png' %}">
+        </a>
+    </div>
+    <div class="header">
+        <div class="cssmenu-container">
+            <div id='cssmenu' class="align-center">
+                <ul>
+                    <li class='active'><a href='/'>{{ data.11.titel }}</a></li>
+                    <li><a href='/about'>{{ data.9.titel }}</a></li>
+                    <!--<li><a href='/partners'>{{ data.11.titel %}</a></li>-->
+                    <li><a href='/contact'>{{ data.3.titel }}</a></li>
+                    <li><a href='/ebook'>Inspiratie</a></li>
+                    <!--<li class="ebookmenu"><a href='/ebook'>Ebook</a></li>-->
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        <!--<div id="ebook" class="ebook">
+            <a href="/ebook">
+                <img class="img-responsive" src="{% static 'webapp/images/book-icon.png' %}">
+            </a>
+        </div>-->
+    </div>
+    <div class="modal fade" id="login" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="forms">
+          <form method="post" action="">
+          	<img class="img-responsive" src="{% static 'webapp/images/def logos via sofie - RGB-092.png' %}">
+          {% csrf_token %}
+          <table>
+            <tbody>
+                <tr>
+                    <th>
+                        <label for="id_email">
+                            <font style="vertical-align: inherit;">
+                                <font style="vertical-align: inherit;">E-mail:
+                                </font>
+                            </font>
+                        </label>
+                    </th>
+                    <td>
+                        <input id="id_email" name="email" placeholder="Email" type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="id_password">
+                            <font style="vertical-align: inherit;">
+                                <font style="vertical-align: inherit;">Password:
+                                </font>
+                            </font>
+                        </label>
+                    </th>
+                    <td>
+                        <input id="id_password" name="password" placeholder="Wachtwoord" type="password">
+                    </td>
+                </tr>
+            </tbody>
+          </table>
+          <input id="submitbutton" name='loginbtn' type="submit" value="Log in" onClick='trigger();'/>
+          <p><a href="/resetpassword">Wachtwoord vergeten?</a></p>
+          <p><a href="/register">Registreer</a></p>
+          </form>
+          </div>
+          <!-- <iframe src="/loginpopup" height="405px" width="250px" id="iframelogin" scrolling= "no" frameBorder="0" ALLOWTRANSPARENCY="true" style="overflow:hidden"> </iframe> -->
+        </div>
+      </div>
+    </div>
+  </div>
+    <script>
+    $("#collapseButton").click(function() {
+        $("#language_menu").toggleClass("lowZindex");
+        $("#header-logo").toggleClass("lowZindex");
+    });
+
+    $(document).ready(function() {
+        var pathname = window.location.pathname;
+
+        $("#cssmenu ul :nth-child(1)").removeClass('active');
+        $("#cssmenu ul :nth-child(2)").removeClass('active');
+        $("#cssmenu ul :nth-child(3)").removeClass('active');
+        $("#cssmenu ul :nth-child(4)").removeClass('active');
+
+        switch (pathname) {
+            case "/":
+                $("#cssmenu ul :nth-child(1)").addClass('active');
+                break;
+            case "/about/":
+                $("#cssmenu ul :nth-child(2)").addClass('active');
+                break;
+            case "/contact/":
+                $("#cssmenu ul :nth-child(3)").addClass('active');
+                break;
+            case "/ebook/":
+                $("#cssmenu ul :nth-child(4)").addClass('active');
+                break;
+            default: {
+                $("#cssmenu ul :nth-child(1)").removeClass('active');
+                $("#cssmenu ul :nth-child(2)").removeClass('active');
+                $("#cssmenu ul :nth-child(3)").removeClass('active');
+                $("#cssmenu ul :nth-child(4)").removeClass('active');
+                break;
+            }
+        }
+
+    });
+    </script>
+<!-- <script>
+$('#login').on('hidden.bs.modal', function (e) {
+   location.href= "/";
+   location.href = "#";
+})
+
+</script> -->
+</header>

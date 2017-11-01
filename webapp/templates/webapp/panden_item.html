@@ -1,0 +1,39 @@
+{% load humanize %} {% load staticfiles %} {% load endless %} {% paginate panden %}
+
+{% for pand in panden %}
+    <div class="col-md-3 top-deal-top">
+        <div class=" top-deal">
+
+            <a href="/pand/{{ pand.referentienummer}}" class="mask">
+                {% for thumbnail in thumbnails %}
+                        {% if thumbnail.pand.referentienummer == pand.referentienummer %}
+                            <img src="/media/{{thumbnail.docfile}}" class="img-responsive zoom-img top-deal-img" alt="">
+                        {% endif %}
+                {% endfor %}
+            </a>
+
+            <div class="deal-bottom">
+
+                <div class="top-deal1">
+                    <h5><a href="/pand/{{ pand.referentienummer}}">{{ pand.straatnaam }} {{ pand.huisnr }}<br>{{ pand.postcode }}, {{ pand.plaats }}</a></h5>
+                    <!--<p>Oppervlakte : {{pand.oppervlakte}}</p>-->
+                    {% if pand.handelstatus.status == "te koop"%}
+                        <p class="prijs">€ {{pand.prijs|intcomma}}</p>
+                    {% else %}
+                        <p class="prijs">€ {{pand.prijs|intcomma}} / maand</p>
+                    {% endif %}
+                </div>
+
+                <div class="top-deal2">
+                    <a href="/pand/{{ pand.referentienummer}}" class="hvr-sweep-to-right more">Toon meer</a>
+                </div>
+
+                <div class="clearfix"> </div>
+
+            </div>
+
+        </div>
+    </div>
+{% endfor %}
+
+{% show_more "Toon meer panden" "Panden laden..." %}
