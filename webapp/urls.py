@@ -1,7 +1,7 @@
 from django.conf.urls import url, include
 from django.contrib.auth import views as viewsauth
 
-import views
+from webapp import views
 
 urlpatterns = [
     url(r'^rosetta/', include('rosetta.urls')),

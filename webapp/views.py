@@ -4,7 +4,8 @@ from django.template.loader import render_to_string, get_template
 from django.contrib.auth import login as django_login, authenticate, logout as django_logout
 from django.core.urlresolvers import reverse
 from django import forms
-from django.shortcuts import render, redirect, render_to_response, RequestContext, get_object_or_404
+from django.shortcuts import render, redirect, render_to_response, get_object_or_404
+from django.template import RequestContext
 from django.db import models
 from django.utils import timezone
 from django.core.mail import send_mail, BadHeaderError, EmailMultiAlternatives, EmailMessage
@@ -37,6 +38,7 @@ import collections
 
 #sander is awesome
 #removed 171 lines of code
+
 # ------------------------------------------------------------------code Removed------------------------------------------------------------------------
 # def slogin(request):
 #     if request.method == 'POST' and 'loginbtn' in request.POST:
@@ -234,12 +236,12 @@ def panden(request, filters=None):
         result_queryset = PandModel.objects.all()
         result_queryset = result_queryset.filter(voortgang=1)
         if filters == "handelstatus=1":
-            print "handelstatus=1"
+            print("handelstatus=1")
             result_queryset = result_queryset.filter(handelstatus=1)
             for result in result_queryset:
                 panden.append(result)
         elif filters == "handelstatus=2":
-            print "handelstatus=2"
+            print("handelstatus=2")
             result_queryset = result_queryset.filter(handelstatus=2)
             for result in result_queryset:
                 panden.append(result)
@@ -414,7 +416,7 @@ def contact(request):
         form = ContactForm()
     else:
         form = ContactForm()
-        formlogin = AuthenticationForm()
+        # formlogin = AuthenticationForm()
     return render_to_response('webapp/contact.html', {
         'form': form,
         # 'formlogin': formlogin,
@@ -501,7 +503,7 @@ def partners(request):
     # dpartners = Data.objects.get(id=11)
     # formlogin = slogin(request)
     partner_list = PartnerModel.objects.all()
-    return render_to_response('webapp/partners.html', {'dpartners': 'dpartners', 'partner_list': partner_list}, context_instance=RequestContext(request))
+    return render_to_response('webapp/partners.html', {'partner_list': partner_list}, context_instance=RequestContext(request))
 
 def partnersform(request):
 	if request.method == "POST":
@@ -529,12 +531,8 @@ def ebooks(request):
 	return render(request, "webapp/ebook.html", {'form': form})
 
 def ebook_lijst(request):
-	ebooks = Ebook.objects.all()
-  	ebook_data = {
-  	"ebook_detail" : ebooks
-  	}
-
-  	return render_to_response('webapp/ebook_lijst.html', ebook_data, context_instance=RequestContext(request))
+    ebooks = Ebook.objects.all()
+    return render_to_response('webapp/ebook_lijst.html', {"ebook_detail":ebooks}, context_instance=RequestContext(request))
 
 def handelstatus(request):
 	if request.method == "POST":
@@ -575,7 +573,7 @@ def tag(request):
 def register(request):
     if request.user.is_authenticated():
         return redirect('/')
-    # formlogin=slogin(request)
+
     if request.method == 'POST':
         form = RegistrationForm(data=request.POST)
         if form.is_valid():
@@ -692,34 +690,45 @@ def foto(request):
 def new_pand(request):
 	return render_to_response('webapp/new_pand.html', context_instance=RequestContext(request))
 
+
+#-----------------------------------------------------------**login Api**------------------------------------------------------------------------------------
+
 def login(request):
     if request.method == 'POST' and 'loginbtn' in request.POST:
+        print("inside1")
         form = AuthenticationForm()
         formlogin = AuthenticationForm(data=request.POST)
         if formlogin.is_valid():
+            print("inside")
             user = authenticate(email=request.POST['email'], password=request.POST['password'])
             if user is not None:
                 if user.is_active:
                     django_login(request, user)
                     return render_to_response('webapp/login.html', {'form': form, 'formlogin': formlogin}, context_instance=RequestContext(request))
+                else:
+                    return redirect('/login')
             else:
                 return redirect('/login')
+        else:
+            return render_to_response('webapp/login.html',{'form':formlogin})
+
     else:
+        print("inside2")
         formlogin=AuthenticationForm()
-    	if request.method == 'POST':
-    		form = AuthenticationForm(data=request.POST)
-    		if form.is_valid():
-    			user = authenticate(email=request.POST['email'], password=request.POST['password'])
-    			if user is not None:
-    				if user.is_active:
-    					django_login(request, user)
-    					return redirect('/')
-    	else:
-    		form = AuthenticationForm()
-	return render_to_response('webapp/login.html', {
-		'form': form,
+        if request.method == 'POST':
+            form = AuthenticationForm(data=request.POST)
+            if form.is_valid():
+                user = authenticate(email=request.POST['email'], password=request.POST['password'])
+                if user is not None:
+                    if user.is_active:
+                        django_login(request, user)
+                        return redirect('/')
+        else:
+        	form = AuthenticationForm()
+        return render_to_response('webapp/login.html', {
+        'form': form,
         'formlogin': formlogin
-	}, context_instance=RequestContext(request))
+        }, context_instance=RequestContext(request))
 
 # def loginpopup(request):
 # 	"""

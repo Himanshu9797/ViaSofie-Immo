@@ -40,8 +40,9 @@ INSTALLED_APPS = (
     'bootstrap3_datetime',
     'qrcode',
     'django.contrib.sites',
-    # 'grappelli',
-    'django_admin_bootstrapped',
+    #'djng',
+    #'grappelli',
+    # 'django_admin_bootstrapped',
     'rosetta',
     'django.contrib.humanize',
     'django.contrib.admin',
@@ -56,8 +57,8 @@ INSTALLED_APPS = (
 ADAPTOR_INPLACEEDIT = {}
 if 'inplaceeditform_extra_fields' in INSTALLED_APPS:
     ADAPTOR_INPLACEEDIT['tiny'] = 'inplaceeditform_extra_fields.fields.AdaptorTinyMCEField'
-    # You can add the other adaptors of inplaceeditform_extra_fields
-    # https://pypi.python.org/pypi/django-inplaceedit-extra-fields#installation
+    #You can add the other adaptors of inplaceeditform_extra_fields
+    #https://pypi.python.org/pypi/django-inplaceedit-extra-fields#installation
 if 'bootstrap3_datetime' in INSTALLED_APPS:
     ADAPTOR_INPLACEEDIT['date'] = 'inplaceeditform_bootstrap.fields.AdaptorDateBootStrapField'
     ADAPTOR_INPLACEEDIT['datetime'] = 'inplaceeditform_bootstrap.fields.AdaptorDateTimeBootStrapField'
@@ -92,12 +93,12 @@ MIDDLEWARE_CLASSES = (
 )
 
 
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-    'django.template.loaders.eggs.Loader',
-    'apptemplates.Loader'
-)
+# TEMPLATE_LOADERS = (
+#     'django.template.loaders.filesystem.Loader',
+#     'django.template.loaders.app_directories.Loader',
+#     'django.template.loaders.eggs.Loader',
+#     'apptemplates.Loader'
+# )
 
 ROOT_URLCONF = 'viasofie.urls'
 handler404 = 'mysite.views.my_custom_page_not_found_view'
@@ -105,11 +106,10 @@ handler404 = 'mysite.views.my_custom_page_not_found_view'
 WSGI_APPLICATION = 'viasofie.wsgi.application'
 
 # pagination
-from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
-TEMPLATE_CONTEXT_PROCESSORS += (
-    'webapp.context_processors.header',
-    'django.core.context_processors.request',
-)
+# from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
+# TEMPLATE_CONTEXT_PROCESSORS += (
+    
+# )
 
 ENDLESS_PAGINATION_PER_PAGE = 8;
 
@@ -118,8 +118,12 @@ ENDLESS_PAGINATION_PER_PAGE = 8;
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE':'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ViaSofie',
+        'USER': 'postgres',
+        'PASSWORD':'happysingh',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -167,15 +171,19 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'viasofie.groep5@gmail.com'
 EMAIL_HOST_PASSWORD = 'BlackLabelZero'
 
+
 TEMPLATES = [
 {
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
-    'DIRS': [os.path.join('BASE_DIR','templates')],
+    'DIRS': [os.path.join(BASE_DIR,'webapp/templates')],
     'APP_DIRS': True,
     'OPTIONS': {
         'context_processors': [
             'django.contrib.auth.context_processors.auth',
             'django.template.context_processors.request',
+            'django.template.context_processors.debug',
+            'django.contrib.messages.context_processors.messages',
+            'webapp.context_processor.header',
         ],
     },
 },

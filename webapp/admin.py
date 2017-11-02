@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.template import RequestContext
-from django.conf.urls import patterns
+# from django.conf.urls import patterns
 from django.shortcuts import render_to_response
 from .models import *
 from django.contrib.admin import AdminSite
